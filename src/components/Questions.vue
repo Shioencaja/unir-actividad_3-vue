@@ -1,5 +1,7 @@
 <script>
+import QuestionHeader from "./QuestionHeader.vue";
 export default {
+  components: { QuestionHeader },
   props: ["questions", "questionsAnswered"],
   emits: ["question-answered"],
   methods: {
@@ -7,20 +9,16 @@ export default {
       this.$emit("question-answered", is_correct);
     },
   },
+  components: { QuestionHeader },
 };
 </script>
 
 <template>
   <div class="questions-ctr">
-    <div class="progress">
-      <div
-        class="bar"
-        :style="{ width: `${(questionsAnswered / questions.length) * 100}%` }"
-      ></div>
-      <div class="status">
-        {{ questionsAnswered }} de {{ questions.length }} preguntas respondidas
-      </div>
-    </div>
+    <QuestionHeader
+      :questions="questions"
+      :questionsAnswered="questionsAnswered"
+    />
     <div
       class="single-question"
       v-for="(question, qi) in questions"
@@ -29,7 +27,6 @@ export default {
     >
       <div class="question">{{ question.q }}</div>
       <div class="answers">
-        {{ /*hay que crear un componente para las respuestas*/  }}
         <div
           class="answer"
           v-for="answer in question.answers"
